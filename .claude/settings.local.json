@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(python:*)",
+      "Bash(cat:*)",
+      "Bash(tree:*)",
+      "Bash(timeout 20 node:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File install-team-system.ps1)",
+      "Bash(powershell:*)",
+      "mcp__ide__executeCode",
+      "Bash(npm install:*)",
+      "Bash(npm run test:unit:*)",
+      "Bash(NODE_OPTIONS=\"--experimental-vm-modules\" npm run test:unit:*)",
+      "Bash(NODE_OPTIONS=\"--experimental-vm-modules\" npx jest:*)",
+      "Bash(NODE_OPTIONS=\"--experimental-vm-modules\" npm run:*)",
+      "Bash(npm test:*)",
+      "Bash(dir TROUBLESHOOTING.md /b:*)",
+      "Bash(NODE_OPTIONS=\"--experimental-vm-modules\" npx jest test/integration/test-mcp-execution-real.js)",
+      "Bash(NODE_OPTIONS=\"--experimental-vm-modules\" npx jest test/integration/test-mcp-execution-real.js --testNamePattern=\"should execute Python code via real Python Bridge\")",
+      "Bash(set NODE_OPTIONS=--experimental-vm-modules)",
+      "Bash(npx jest test/integration/test-mcp-execution-real.js)",
+      "Bash(dir testintegrationtest-*.js /b)",
+      "Bash(dir testintegration:*)",
+      "Bash(npm run:*)",
+      "Bash(node test-basico.js)",
+      "Bash(node test/integration/test-integracao-real.js)",
+      "Bash(gh:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git reset:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

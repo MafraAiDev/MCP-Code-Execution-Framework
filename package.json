@@ -1,0 +1,58 @@
+{
+  "name": "mcp-code-execution-framework",
+  "version": "2.0.0",
+  "description": "Framework para execução eficiente de código com MCP - Híbrido JS + Python",
+  "type": "module",
+  "main": "core/index.js",
+  "scripts": {
+    "start": "node core/index.js",
+    "build": "echo 'Build completed - No compilation needed for ES modules'",
+    "dev": "node core/index.js",
+    "test": "jest",
+    "test:unit": "jest test/unit",
+    "test:integration": "jest test/integration",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint core/**/*.js test/**/*.js --fix",
+    "discover": "node core/auto-discovery.js",
+    "example:hello": "node examples/01-hello-world.js",
+    "example:scraping": "node examples/02-web-scraping.js",
+    "example:security": "node examples/03-security-validation.js",
+    "example:privacy": "node examples/04-privacy-protection.js",
+    "example:workflow": "node examples/05-complete-workflow.js",
+    "example:all": "npm run example:hello && npm run example:scraping && npm run example:security && npm run example:privacy && npm run example:workflow",
+    "docs:serve": "python -m http.server 8080",
+    "docs:open": "start http://localhost:8080/QUICKSTART.md",
+    "vercel:deploy": "vercel deploy --prod",
+    "vercel:dev": "vercel dev"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "code-execution",
+    "anthropic",
+    "claude",
+    "llm",
+    "ai",
+    "framework"
+  ],
+  "author": "Sonnet 4.5 (Architect) + Kimi K2 (Executor)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "python": ">=3.9.0"
+  },
+  "dependencies": {
+    "python-shell": "^5.0.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.2.0",
+    "eslint": "^8.0.0",
+    "jest": "^30.2.0",
+    "prettier": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-usuario/mcp-code-execution-framework"
+  }
+}
