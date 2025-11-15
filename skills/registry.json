@@ -1,0 +1,396 @@
+{
+  "version": "1.0.0",
+  "totalSkills": 24,
+  "categories": {
+    "creative": ["brand-analyzer", "pitch-deck", "script-writer", "social-media-generator", "storyboard-manager", "research-paper-writer"],
+    "business": ["business-analytics-reporter", "business-document-generator", "finance-manager", "startup-validator", "data-analyst"],
+    "development": ["codebase-documenter", "cicd-pipeline-generator", "docker-containerization", "frontend-enhancer", "tech-debt-analyzer", "test-specialist"],
+    "utilities": ["csv-data-visualizer", "document-skills", "personal-assistant", "resume-manager", "seo-optimizer"],
+    "specialized": ["nutritional-specialist", "travel-planner"]
+  },
+  "skills": [
+    {
+      "name": "brand-analyzer",
+      "displayName": "Brand Analyzer",
+      "description": "Analyzes brand identity, positioning, and marketing strategies",
+      "category": "creative",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/brand-analyzer",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "brandName": { "type": "string", "required": true },
+        "includeCompetitors": { "type": "boolean", "default": false }
+      }
+    },
+    {
+      "name": "business-analytics-reporter",
+      "displayName": "Business Analytics Reporter",
+      "description": "Generates comprehensive business analytics reports",
+      "category": "business",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/business-analytics-reporter",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "dataSource": { "type": "string", "required": true },
+        "format": { "type": "string", "enum": ["pdf", "html", "markdown"], "default": "markdown" }
+      }
+    },
+    {
+      "name": "business-document-generator",
+      "displayName": "Business Document Generator",
+      "description": "Creates professional business documents",
+      "category": "business",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/business-document-generator",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "documentType": { "type": "string", "required": true },
+        "template": { "type": "string", "required": false }
+      }
+    },
+    {
+      "name": "cicd-pipeline-generator",
+      "displayName": "CI/CD Pipeline Generator",
+      "description": "Generates CI/CD pipeline configurations",
+      "category": "development",
+      "priority": "high",
+      "version": "1.0.0",
+      "path": "skills/packages/cicd-pipeline-generator",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "platform": { "type": "string", "enum": ["github", "gitlab", "jenkins"], "required": true },
+        "language": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "codebase-documenter",
+      "displayName": "Codebase Documenter",
+      "description": "Generates comprehensive documentation for codebases",
+      "category": "development",
+      "priority": "high",
+      "version": "1.0.0",
+      "path": "skills/packages/codebase-documenter",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "path": { "type": "string", "required": true },
+        "outputFormat": { "type": "string", "enum": ["markdown", "html", "pdf"], "default": "markdown" },
+        "includeTests": { "type": "boolean", "default": true }
+      }
+    },
+    {
+      "name": "csv-data-visualizer",
+      "displayName": "CSV Data Visualizer",
+      "description": "Creates visualizations from CSV data",
+      "category": "utilities",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/csv-data-visualizer",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "csvPath": { "type": "string", "required": true },
+        "chartType": { "type": "string", "enum": ["bar", "line", "pie"], "default": "bar" }
+      }
+    },
+    {
+      "name": "data-analyst",
+      "displayName": "Data Analyst",
+      "description": "Performs comprehensive data analysis",
+      "category": "business",
+      "priority": "high",
+      "version": "1.0.0",
+      "path": "skills/packages/data-analyst",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "dataPath": { "type": "string", "required": true },
+        "analysisType": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "docker-containerization",
+      "displayName": "Docker Containerization",
+      "description": "Creates Docker configurations for applications",
+      "category": "development",
+      "priority": "high",
+      "version": "1.0.0",
+      "path": "skills/packages/docker-containerization",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "projectPath": { "type": "string", "required": true },
+        "baseImage": { "type": "string", "default": "node:18" }
+      }
+    },
+    {
+      "name": "document-skills",
+      "displayName": "Document Skills",
+      "description": "Document processing and manipulation utilities",
+      "category": "utilities",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/document-skills",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "operation": { "type": "string", "required": true },
+        "documentPath": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "finance-manager",
+      "displayName": "Finance Manager",
+      "description": "Financial planning and management tools",
+      "category": "business",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/finance-manager",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "operation": { "type": "string", "required": true },
+        "data": { "type": "object", "required": true }
+      }
+    },
+    {
+      "name": "frontend-enhancer",
+      "displayName": "Frontend Enhancer",
+      "description": "Enhances and optimizes frontend code",
+      "category": "development",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/frontend-enhancer",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "projectPath": { "type": "string", "required": true },
+        "framework": { "type": "string", "enum": ["react", "vue", "angular"] }
+      }
+    },
+    {
+      "name": "nutritional-specialist",
+      "displayName": "Nutritional Specialist",
+      "description": "Nutritional analysis and meal planning",
+      "category": "specialized",
+      "priority": "low",
+      "version": "1.0.0",
+      "path": "skills/packages/nutritional-specialist",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "goal": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "personal-assistant",
+      "displayName": "Personal Assistant",
+      "description": "Personal productivity and task management",
+      "category": "utilities",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/personal-assistant",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "task": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "pitch-deck",
+      "displayName": "Pitch Deck Generator",
+      "description": "Creates investor pitch decks",
+      "category": "creative",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/pitch-deck",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "companyName": { "type": "string", "required": true },
+        "industry": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "research-paper-writer",
+      "displayName": "Research Paper Writer",
+      "description": "Writes academic research papers",
+      "category": "creative",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/research-paper-writer",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "topic": { "type": "string", "required": true },
+        "citations": { "type": "array", "default": [] }
+      }
+    },
+    {
+      "name": "resume-manager",
+      "displayName": "Resume Manager",
+      "description": "Creates and optimizes professional resumes",
+      "category": "utilities",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/resume-manager",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "profile": { "type": "object", "required": true },
+        "template": { "type": "string", "default": "professional" }
+      }
+    },
+    {
+      "name": "script-writer",
+      "displayName": "Script Writer",
+      "description": "Writes scripts for various media",
+      "category": "creative",
+      "priority": "low",
+      "version": "1.0.0",
+      "path": "skills/packages/script-writer",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "genre": { "type": "string", "required": true },
+        "length": { "type": "string", "default": "short" }
+      }
+    },
+    {
+      "name": "seo-optimizer",
+      "displayName": "SEO Optimizer",
+      "description": "Optimizes content for search engines",
+      "category": "utilities",
+      "priority": "high",
+      "version": "1.0.0",
+      "path": "skills/packages/seo-optimizer",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "content": { "type": "string", "required": true },
+        "keywords": { "type": "array", "required": true }
+      }
+    },
+    {
+      "name": "social-media-generator",
+      "displayName": "Social Media Generator",
+      "description": "Generates social media content",
+      "category": "creative",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/social-media-generator",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "platform": { "type": "string", "enum": ["twitter", "linkedin", "instagram"], "required": true },
+        "topic": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "startup-validator",
+      "displayName": "Startup Validator",
+      "description": "Validates startup ideas and business models",
+      "category": "business",
+      "priority": "medium",
+      "version": "1.0.0",
+      "path": "skills/packages/startup-validator",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "idea": { "type": "string", "required": true },
+        "market": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "storyboard-manager",
+      "displayName": "Storyboard Manager",
+      "description": "Creates and manages storyboards",
+      "category": "creative",
+      "priority": "low",
+      "version": "1.0.0",
+      "path": "skills/packages/storyboard-manager",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "project": { "type": "string", "required": true }
+      }
+    },
+    {
+      "name": "tech-debt-analyzer",
+      "displayName": "Tech Debt Analyzer",
+      "description": "Analyzes and reports technical debt",
+      "category": "development",
+      "priority": "high",
+      "version": "1.0.0",
+      "path": "skills/packages/tech-debt-analyzer",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "projectPath": { "type": "string", "required": true },
+        "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"], "default": "medium" }
+      }
+    },
+    {
+      "name": "test-specialist",
+      "displayName": "Test Specialist",
+      "description": "Generates and optimizes test suites",
+      "category": "development",
+      "priority": "high",
+      "version": "1.0.0",
+      "path": "skills/packages/test-specialist",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "codePath": { "type": "string", "required": true },
+        "framework": { "type": "string", "enum": ["jest", "mocha", "pytest"], "default": "jest" }
+      }
+    },
+    {
+      "name": "travel-planner",
+      "displayName": "Travel Planner",
+      "description": "Plans and optimizes travel itineraries",
+      "category": "specialized",
+      "priority": "low",
+      "version": "1.0.0",
+      "path": "skills/packages/travel-planner",
+      "entrypoint": "index.js",
+      "skillFile": "SKILL.md",
+      "dependencies": ["python-bridge"],
+      "parameters": {
+        "destination": { "type": "string", "required": true },
+        "duration": { "type": "number", "required": true },
+        "budget": { "type": "number", "required": false }
+      }
+    }
+  ]
+}
