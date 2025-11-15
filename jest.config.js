@@ -7,6 +7,11 @@ export default {
   testMatch: [
     '**/test/**/*.js'
   ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    'test-integracao-real.js',
+    'test-mcp-execution-real.js'
+  ],
   collectCoverageFrom: [
     'core/**/*.js',
     'servers/**/*.js',
