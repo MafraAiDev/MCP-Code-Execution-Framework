@@ -1,69 +1,8 @@
 {
   "name": "mcp-framework",
-  "version": 2,
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
+  "buildCommand": "npm test",
   "installCommand": "npm install",
-  "framework": null,
-  "public": false,
-  "env": {
-    "PYTHON_PATH": {
-      "description": "Path to Python executable",
-      "value": "python3"
-    },
-    "APIFY_TOKEN": {
-      "description": "Apify API Token (optional)",
-      "value": ""
-    },
-    "GUARDRAILS_API_KEY": {
-      "description": "Guardrails AI API Key (optional)",
-      "value": ""
-    }
-  },
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
-    }
-  },
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x",
-      "memory": 1024,
-      "maxDuration": 30
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Credentials",
-          "value": "true"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-        }
-      ]
-    }
-  ],
   "github": {
-    "enabled": true,
-    "autoAlias": true,
-    "autoJobCancelation": true
+    "enabled": false
   }
 }
