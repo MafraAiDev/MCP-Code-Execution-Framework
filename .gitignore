@@ -53,3 +53,16 @@ secrets/
 # Temporary files
 *.tmp
 .cache/
+
+# Test files (standalone)
+test-*.js
+test_*.py
+*README-TESTES.txt
+
+# Planning/Reports (temporary docs)
+AUDITORIA-*.md
+RELATORIO-*.md
+STATUS-*.md
+TAREFA*.md
+PLANEJAMENTO-*.md
+*-FASE-*.md

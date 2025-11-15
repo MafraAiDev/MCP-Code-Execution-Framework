@@ -29,7 +29,16 @@
       "Bash(gh:*)",
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(git commit:*)",
+      "Bash(start https://github.com/settings/tokens/new)",
+      "Bash(start https://github.com/login/device)",
+      "Bash(git push:*)",
+      "Bash(git branch:*)",
+      "Bash(start https://github.com/MafraAiDev/MCP-Code-Execution-Framework/actions)",
+      "Bash(npm audit:*)",
+      "Bash(start https://github.com/MafraAiDev/MCP-Code-Execution-Framework/actions/runs/19393595611)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
