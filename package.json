@@ -9,6 +9,7 @@
     "build": "echo 'Build completed - No compilation needed for ES modules'",
     "dev": "node core/index.js",
     "test": "jest",
+    "test:ci": "NODE_OPTIONS='--experimental-vm-modules' jest --passWithNoTests",
     "test:unit": "jest test/unit",
     "test:integration": "jest test/integration",
     "test:watch": "jest --watch",
