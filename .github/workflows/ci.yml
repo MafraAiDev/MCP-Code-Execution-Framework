@@ -54,7 +54,7 @@ jobs:
     name: Deploy to Vercel
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && vars.VERCEL_TOKEN != ''
 
     steps:
     - name: Checkout code
