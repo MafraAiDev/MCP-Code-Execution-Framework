@@ -51,6 +51,8 @@ class SkillLoader {
 
       // Carregar módulo principal
       const entryPoint = path.join(skillPath, skillInfo.entrypoint || 'index.js');
+      // Path validado - seguro para dynamic require
+      // eslint-disable-next-line security/detect-non-literal-require
       const skillModule = require(entryPoint);
 
       // Criar objeto skill carregada

@@ -27,6 +27,7 @@ class SkillsManager {
       validateOnLoad: options.validateOnLoad !== false,
       timeoutMs: options.timeoutMs || 30000,
       maxConcurrentSkills: options.maxConcurrentSkills || 3,
+      cacheTTL: options.cacheTTL || 3600000, // 1 hora em ms
       ...options
     };
 
@@ -182,8 +183,12 @@ class SkillsManager {
       if (this.options.cacheSkills) {
         this.loadedSkills.set(skillName, {
           metadata,
-          pythonHandle: pythonResult.handle
+          pythonHandle: pythonResult.handle,
+          loadedAt: Date.now() // Adicione timestamp
         });
+
+        // Limpar cache expirado
+        this._cleanupExpiredSkills();
       }
 
       return metadata;
@@ -203,38 +208,18 @@ class SkillsManager {
     const startTime = Date.now();
 
     try {
-      // Validar parâmetros básicos
-      if (!skillName) {
-        throw new Error('Skill name is required');
-      }
-
-      // Verificar limite de skills simultâneas
-      if (this.runningSkills.size >= this.options.maxConcurrentSkills) {
-        throw new Error(`Maximum concurrent skills limit reached (${this.options.maxConcurrentSkills})`);
-      }
-
-      // Carregar skill se necessário
-      if (!this.loadedSkills.has(skillName)) {
-        await this.loadSkill(skillName);
-      }
+      await this._validateExecution(skillName);
 
       const skillCache = this.loadedSkills.get(skillName);
-
-      // Validar parâmetros contra schema
       const skillInfo = this.registry.skills.find(s => s.name === skillName);
+
       if (skillInfo.parameters) {
         this._validateParameters(params, skillInfo.parameters);
       }
 
-      // Marcar skill como em execução
       const executionId = `${skillName}-${Date.now()}`;
-      this.runningSkills.set(executionId, {
-        skillName,
-        startTime,
-        params
-      });
+      this.runningSkills.set(executionId, { skillName, startTime, params });
 
-      // Executar via Python Bridge
       const result = await Promise.race([
         this.pythonBridge.execute('skills.executor', 'execute_skill', {
           skill_name: skillName,
@@ -244,33 +229,7 @@ class SkillsManager {
         this._timeout(options.timeoutMs || this.options.timeoutMs, skillName)
       ]);
 
-      // Remover de execução
-      this.runningSkills.delete(executionId);
-
-      // Atualizar estatísticas
-      const executionTime = Date.now() - startTime;
-      this.stats.totalExecutions++;
-
-      if (result.success) {
-        this.stats.successfulExecutions++;
-        skillCache.executionCount++;
-
-        // Atualizar média de tempo
-        this.stats.averageExecutionTime =
-          (this.stats.averageExecutionTime * (this.stats.totalExecutions - 1) + executionTime) /
-          this.stats.totalExecutions;
-
-        return {
-          success: true,
-          skillName,
-          result: result.data,
-          executionTime,
-          timestamp: new Date().toISOString()
-        };
-      } else {
-        this.stats.failedExecutions++;
-        throw new Error(result.error || 'Skill execution failed');
-      }
+      return this._processResult(skillName, result, startTime, executionId);
     } catch (error) {
       this.stats.failedExecutions++;
       throw new Error(`Skill execution failed for '${skillName}': ${error.message}`);
@@ -313,6 +272,69 @@ class SkillsManager {
     return new Promise((_, reject) =>
       setTimeout(() => reject(new Error(`Skill '${skillName}' execution timed out after ${ms}ms`)), ms)
     );
+  }
+
+  /**
+   * Limpa skills expiradas do cache
+   * @private
+   */
+  _cleanupExpiredSkills() {
+    const now = Date.now();
+    for (const [skillName, skillCache] of this.loadedSkills.entries()) {
+      if (now - skillCache.loadedAt > this.options.cacheTTL) {
+        this.loadedSkills.delete(skillName);
+      }
+    }
+  }
+
+  /**
+   * Valida pré-requisitos para execução
+   * @private
+   */
+  async _validateExecution(skillName) {
+    if (!skillName) {
+      throw new Error('Skill name is required');
+    }
+
+    if (this.runningSkills.size >= this.options.maxConcurrentSkills) {
+      throw new Error(`Maximum concurrent skills limit reached (${this.options.maxConcurrentSkills})`);
+    }
+
+    if (!this.loadedSkills.has(skillName)) {
+      await this.loadSkill(skillName);
+    }
+  }
+
+  /**
+   * Processa resultado da execução
+   * @private
+   */
+  _processResult(skillName, result, startTime, executionId) {
+    this.runningSkills.delete(executionId);
+
+    const executionTime = Date.now() - startTime;
+    this.stats.totalExecutions++;
+
+    if (result.success) {
+      this.stats.successfulExecutions++;
+      const skillCache = this.loadedSkills.get(skillName);
+      skillCache.executionCount++;
+
+      this.stats.averageExecutionTime =
+        (this.stats.averageExecutionTime * (this.stats.totalExecutions - 1) + executionTime) /
+        this.stats.totalExecutions;
+
+      return {
+        success: true,
+        skillName,
+        result: result.data,
+        executionTime,
+        timestamp: new Date().toISOString()
+      };
+    } else {
+      this.stats.failedExecutions++;
+      throw new Error(result.error || 'Skill execution failed');
+    }
   }
 
   /**
