@@ -25,7 +25,7 @@ class SkillExecutor:
     - MCP-compatible output
     """
 
-    def __init__(self, skills_path: str = None):
+    def __init__(self, skills_path: str = None, max_retries: int = 3):
         """
         Initialize the Skill Executor
 
@@ -39,12 +39,14 @@ class SkillExecutor:
             self.skills_path = Path(skills_path)
 
         self.loaded_modules = {}
+        self._cache_ttl = 3600  # 1 hour default
         self.execution_stats = {
             "total_executions": 0,
             "successful": 0,
             "failed": 0,
             "total_time": 0
         }
+        self.max_retries = max_retries
 
     async def execute_skill(
         self,
@@ -69,6 +71,9 @@ class SkillExecutor:
             Exception: For skill execution errors
         """
         start_time = datetime.now()
+
+        # Cleanup expired cache entries
+        self._cleanup_expired_cache()
 
         try:
             # Validate skill exists
@@ -167,7 +172,13 @@ class SkillExecutor:
         """
         # Check cache
         if skill_name in self.loaded_modules:
-            return self.loaded_modules[skill_name]
+            module_data = self.loaded_modules[skill_name]
+            # Check if cache is still valid
+            if datetime.now().timestamp() - module_data["timestamp"] < self._cache_ttl:
+                return module_data["module"]
+            else:
+                # Cache expired, remove it
+                del self.loaded_modules[skill_name]
 
         # Determine entry point
         index_py = skill_path / "index.py"
@@ -175,21 +186,41 @@ class SkillExecutor:
 
         entry_point = index_py if index_py.exists() else init_py
 
-        # Load module
-        spec = importlib.util.spec_from_file_location(
-            f"skills.{skill_name}",
-            entry_point
-        )
+        # Load module with retry
+        last_exception = None
+        for attempt in range(self.max_retries):
+            try:
+                spec = importlib.util.spec_from_file_location(
+                    f"skills.{skill_name}",
+                    entry_point
+                )
 
-        if spec is None or spec.loader is None:
-            raise ImportError(f"Cannot load skill '{skill_name}'")
+                if spec is None or spec.loader is None:
+                    raise ImportError(f"Cannot load skill '{skill_name}'")
+
+                # Success - break retry loop
+                break
+
+            except Exception as e:
+                last_exception = e
+                if attempt < self.max_retries - 1:
+                    # Wait before retry (exponential backoff)
+                    await asyncio.sleep(0.1 * (2 ** attempt))
+                else:
+                    # Last attempt - raise the error
+                    raise ImportError(
+                        f"Failed to load skill '{skill_name}' after {self.max_retries} attempts: {last_exception}"
+                    ) from last_exception
 
         module = importlib.util.module_from_spec(spec)
         sys.modules[f"skills.{skill_name}"] = module
         spec.loader.exec_module(module)
 
-        # Cache module
-        self.loaded_modules[skill_name] = module
+        # Cache module with timestamp
+        self.loaded_modules[skill_name] = {
+            "module": module,
+            "timestamp": datetime.now().timestamp()
+        }
 
         return module
 
@@ -248,6 +279,19 @@ class SkillExecutor:
         """Clear loaded modules cache"""
         self.loaded_modules.clear()
 
+    def _cleanup_expired_cache(self):
+        """
+        Remove expired entries from cache
+        """
+        current_time = datetime.now().timestamp()
+        expired_keys = [
+            key for key, data in self.loaded_modules.items()
+            if current_time - data["timestamp"] > self._cache_ttl
+        ]
+
+        for key in expired_keys:
+            del self.loaded_modules[key]
+
 
 # CLI interface for testing
 if __name__ == "__main__":
@@ -261,7 +305,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     params = json.loads(args.params)
 
-    # Run async execution
+    # Create executor and run async execution
+    executor = SkillExecutor()
     result = asyncio.run(
         executor.execute_skill(args.skill, params, args.timeout)
     )

@@ -6,6 +6,7 @@ Handles stdin/stdout communication for MCP integration
 import sys
 import json
 import asyncio
+import logging
 from typing import Dict, Any
 from .executor import SkillExecutor
 
@@ -46,6 +47,19 @@ class PythonBridge:
         """
         self.executor = SkillExecutor(skills_path)
         self.running = False
+
+        # Setup error logging
+        self._setup_error_logging()
+
+    def _setup_error_logging(self):
+        """
+        Setup error logging to file instead of stderr
+        """
+        logging.basicConfig(
+            filename='python_bridge_errors.log',
+            level=logging.ERROR,
+            format='%(asctime)s - %(levelname)s - %(message)s'
+        )
 
     async def start(self):
         """Start the bridge (listen to stdin)"""
@@ -145,8 +159,8 @@ class PythonBridge:
             message = json.dumps(data)
             print(message, flush=True)
         except Exception as e:
-            # Last resort error logging to stderr
-            print(f"ERROR: Failed to send message: {e}", file=sys.stderr)
+            # Last resort error logging to file
+            logging.error(f"Failed to send message: {e}")
 
     def _send_error(self, error: str, request_id: str = None):
         """Send error message"""
