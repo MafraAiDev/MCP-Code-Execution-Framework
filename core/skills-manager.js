@@ -3,9 +3,12 @@
  * @module core/skills-manager
  */
 
-const path = require('path');
-const SkillLoader = require('../skills/loader');
-const SkillValidator = require('../skills/validator');
+import path from 'path';
+import SkillLoaderModule from '../skills/loader.js';
+import SkillValidatorModule from '../skills/validator.js';
+
+const SkillLoader = SkillLoaderModule;
+const SkillValidator = SkillValidatorModule;
 
 /**
  * Gerenciador centralizado de Skills do MCP Framework
@@ -401,4 +404,4 @@ class SkillsManager {
   }
 }
 
-module.exports = SkillsManager;
+export default SkillsManager;
