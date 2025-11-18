@@ -137,7 +137,6 @@ describe('MCPInterceptor - Testes de Unidade', () => {
 
     it('should simulate Progressive Disclosure', () => {
       const availableCategories = ['security', 'scraping', 'privacy'];
-      const userLevel = 'beginner';
 
       const getAvailableMCPs = (level) => {
         if (level === 'beginner') {

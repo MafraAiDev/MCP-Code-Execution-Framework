@@ -70,7 +70,7 @@ export class PythonBridge extends EventEmitter {
       this.initialized = false;
 
       // Rejeita todas as requisições pendentes
-      for (const [id, { reject }] of this.pendingRequests) {
+      for (const [, { reject }] of this.pendingRequests) {
         reject(new Error('Python process terminated'));
       }
       this.pendingRequests.clear();

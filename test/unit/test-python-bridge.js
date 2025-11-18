@@ -135,7 +135,7 @@ describe('PythonBridge - Testes de Unidade', () => {
         { expr: '100 / 4', expected: 25 }
       ];
 
-      expressions.forEach(({ expr, expected }) => {
+      expressions.forEach(({ expected }) => {
         // Simula avaliação
         const result = expected;
         expect(result).toBe(expected);

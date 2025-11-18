@@ -121,7 +121,7 @@ export class MCPInterceptor {
 
     for (const globalObj of globalObjects) {
       // Cria proxy para detectar acessos dinâmicos
-      const originalProxy = new Proxy(globalObj, {
+      new Proxy(globalObj, {
         get: (target, prop) => {
           // Verifica se é tentativa de acessar MCP
           if (this._isMCPName(prop)) {

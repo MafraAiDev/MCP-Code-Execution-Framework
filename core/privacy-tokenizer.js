@@ -245,7 +245,7 @@ export class PrivacyTokenizer {
   containsPII(data) {
     const str = typeof data === 'string' ? data : JSON.stringify(data);
 
-    return Object.entries(this.patterns).some(([key, pattern]) => {
+    return Object.entries(this.patterns).some(([, pattern]) => {
       return pattern.test(str);
     });
   }
