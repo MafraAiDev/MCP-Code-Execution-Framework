@@ -329,7 +329,7 @@ result
     it('should handle rate limiting in MCP execution', async () => {
       let callCount = 0;
       const framework = {
-        execute: async (code) => {
+        execute: async () => {
           callCount++;
           if (callCount > 3) {
             return {
@@ -360,7 +360,7 @@ result
     it('should handle bulk MCP operations efficiently', async () => {
       const framework = {
         executionTimes: [],
-        execute: async function(code) {
+        execute: async function() {
           const start = performance.now();
 
           // Simula execução bulk
