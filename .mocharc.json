@@ -1,0 +1,20 @@
+{
+  "diff": true,
+  "reporter": "spec",
+  "timeout": 10000,
+  "ui": "bdd",
+  "recursive": true,
+  "exit": true,
+  "color": true,
+  "inline-diffs": false,
+  "slow": 75,
+  "bail": false,
+  "spec": [
+    "test/unit/test-skills-*.cjs",
+    "test/integration/test-skills-*.cjs"
+  ],
+  "exclude": [
+    "test/fixtures/**/*",
+    "test/temp/**/*"
+  ]
+}

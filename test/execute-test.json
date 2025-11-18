@@ -1,0 +1,1 @@
+{"action":"execute","skill":"test-skill","path":"test/fixtures/test-skill","params":{"name":"Validator","greeting":"Hello"},"requestId":"exec"}
