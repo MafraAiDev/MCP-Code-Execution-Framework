@@ -1,6 +1,6 @@
 {
   "name": "mcp-code-execution-framework",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Framework de alta performance para execução de código com MCP - Híbrido JS + Python (2500 tasks/s)",
   "type": "module",
   "main": "core/index.js",
